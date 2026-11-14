@@ -48,6 +48,7 @@ Os scripts ficam na pasta `database/`:
 ```
 src/
 ├── app/    -> classe principal (Programa)
+├── dao/    -> acesso ao banco (ClienteDAO)
 ├── db/     -> conexão com o banco (ConexaoBanco)
 └── model/  -> Cliente, Produto, Pedido e ItemPedido
 database/   -> scripts SQL
@@ -70,7 +71,7 @@ senha=SUA_SENHA
 
 ## 🌱 Próximos passos
 
-- [ ] CRUD completo com classes DAO
+-  [x] CRUD de clientes com ClienteDAO
 - [ ] Cadastro de pedidos com itens
 - [ ] Migração para Spring Boot e JPA
 
