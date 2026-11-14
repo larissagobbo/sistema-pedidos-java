@@ -1,26 +1,35 @@
 package app;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import db.ConexaoBanco;
+import dao.ClienteDAO;
 import model.Cliente;
 
 public class Programa {
 
     public static void main(String[] args) {
-        try (Connection conn = ConexaoBanco.getConexao();
-             Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery("SELECT id, nome, email FROM cliente ORDER BY id")) {
+        ClienteDAO dao = new ClienteDAO();
 
-            while (rs.next()) {
-                Cliente c = new Cliente(rs.getInt("id"), rs.getString("nome"), rs.getString("email"));
-                System.out.println(c);
-            }
+        // CREATE
+        Cliente novo = new Cliente(null, "Larissa Teste", "larissa.teste@email.com");
+        dao.inserir(novo);
+        System.out.println("Inserido: " + novo);
 
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+        // READ (todos)
+        System.out.println("\n--- Todos os clientes ---");
+        for (Cliente c : dao.listarTodos()) {
+            System.out.println(c);
         }
+
+        // READ (por id)
+        System.out.println("\n--- Buscar por id ---");
+        System.out.println(dao.buscarPorId(novo.getId()));
+
+        // UPDATE
+        novo.setNome("Larissa Atualizada");
+        dao.atualizar(novo);
+        System.out.println("\nApós atualizar: " + dao.buscarPorId(novo.getId()));
+
+        // DELETE
+        dao.deletar(novo.getId());
+        System.out.println("\nApós deletar: " + dao.buscarPorId(novo.getId()));
     }
 }
