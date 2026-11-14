@@ -1,0 +1,24 @@
+CREATE TABLE cliente (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	email VARCHAR(150) NOT NULL UNIQUE
+);
+
+CREATE TABLE produto (
+	id SERIAL PRIMARY KEY,
+	nome VARCHAR(100) NOT NULL,
+	preco NUMERIC(10,2) NOT NULL
+);
+
+CREATE TABLE pedido (
+	id SERIAL PRIMARY KEY,
+	data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	id_cliente INTEGER NOT NULL REFERENCES cliente(id)
+);
+
+CREATE TABLE item_pedido(
+	id_pedido INTEGER NOT NULL REFERENCES pedido(id),
+	id_produto INTEGER NOT NULL REFERENCES produto(id),
+	quantidade INTEGER NOT NULL,
+	PRIMARY KEY (id_pedido, id_produto)
+);
